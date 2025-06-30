@@ -1,5 +1,5 @@
 import { execAsync } from "@/helpers"
-import { cdpEndpoint, cdpPort, dockerImage, vncPort } from "@/helpers/misc"
+import { cdpEndpoint, cdpPort, dockerImage, vncPort } from "@/helpers/config"
 
 let containerId: string | null = null
 
@@ -21,7 +21,7 @@ export const POST = async (req: Request) => {
         const dockerCommand = `docker run -d -e PORT=${vncPort} -p ${vncPort}:${vncPort} -p ${cdpPort}:${cdpPort} -e START_URL=${url} ${dockerImage}`
         const { stdout } = await execAsync(dockerCommand)
         containerId = stdout.trim()
-        await new Promise((resolve) => setTimeout(resolve, 2000))
+        await new Promise((resolve) => setTimeout(resolve, 2500))
 
         return Response.json({
             success: true,

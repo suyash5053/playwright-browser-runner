@@ -1,6 +1,6 @@
 import { Browser, chromium, Page } from 'playwright'
 import { executePlaywrightCommand } from "@/helpers"
-const CDP_ENDPOINT = 'http://localhost:9222'
+import { cdpEndpoint } from "@/helpers/config"
 
 let browser: Browser | null = null
 let page: Page | null = null
@@ -8,7 +8,7 @@ let page: Page | null = null
 const ensureConnection = async () => {
   if (!browser || !page) {
     try {
-      browser = await chromium.connectOverCDP(CDP_ENDPOINT)
+      browser = await chromium.connectOverCDP(cdpEndpoint)
 
       const contexts = browser.contexts()
       let foundPage = null

@@ -1,5 +1,5 @@
 import { findContainersUsingPorts } from "@/helpers"
-import { cdpPort, vncPort } from "@/helpers/misc"
+import { cdpPort, vncPort } from "@/helpers/config"
 import { execAsync } from "@/helpers"
 const portsToCheck: number[] = [cdpPort, vncPort]
 
@@ -19,7 +19,7 @@ export const DELETE = async () => {
         }
         return Response.json({
             success: true,
-            message: "Ports closed successfully"
+            message: "Ports closed successfully, you may continue"
         })
     } catch (error) {
         console.error("Error checking ports:", error)

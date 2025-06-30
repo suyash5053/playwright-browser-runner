@@ -1,24 +1,23 @@
 "use client"
 
 import useUiStore from "@/store/useUiStore"
-import { Button } from "./ui/button"
-import { Maximize2, Minimize2 } from "lucide-react"
 import EmbeddedBrowser from "./EmbeddedBrowser"
 import useBrowserStore from "@/store/useBrowserStore"
+import ExpandScreenButton from "./ExpandScreenButton"
 
 const RightPanel = () => {
-  const { isExpanded, setIsExpanded } = useUiStore()
+  const { isBrowserOpen } = useUiStore()
   const { url } = useBrowserStore()
   
-  return <div className="flex flex-col p-4 gap-4 h-full">
+  return (<div className="flex flex-col p-4 gap-4 h-full">
     <div className="flex gap-4 items-center">
-      <div className="border rounded-md flex-1 items-center flex px-4 bg-zinc-100 h-10">{url}</div>
-      <Button variant={"outline"} size={"icon"} onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? <Minimize2 /> : <Maximize2 />}</Button>
+      <div className="border rounded-md flex-1 items-center flex px-4 bg-zinc-100 h-10">{isBrowserOpen ? url : ""}</div>
+      <ExpandScreenButton />
     </div>
     <div className="flex-1 border rounded-md h-full">
       <EmbeddedBrowser />
     </div>
-  </div>
+  </div>)
 }
 
 export default RightPanel
