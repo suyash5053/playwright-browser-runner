@@ -64,7 +64,7 @@ const CommandInput = () => {
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && event.ctrlKey) {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
       handleCommandRun()
     }
   }
