@@ -1,14 +1,17 @@
 "use client"
 
-import useStore from "@/store"
+import useStore from "@/store/useUiStore"
 import { Button } from "./ui/button"
-import { Globe } from "lucide-react"
-
+import { Globe, Loader } from "lucide-react"
+import useBrowserStore from "@/store/useBrowserStore"
 
 const OpenBrowserButton = ({ handleClick }: { handleClick: () => void }) => {
-  const { isBrowserOpen } = useStore()
+  const { isBrowserOpen, isReady } = useStore()
+  const { isLoading, } = useBrowserStore()
   return (
-    <Button onClick={handleClick} variant="outline" className="gap-2 w-38 h-10"><Globe />{isBrowserOpen ? "Close" : "Open"} Browser</Button>
+    <Button onClick={handleClick} variant="outline" className="gap-2 h-10 disabled:{isLoading || !isReady}" disabled={isLoading || !isReady}>
+      {isLoading ? <Loader className="animate-spin" /> : isBrowserOpen ? "Close Browser" : "Open Browser"}
+    </Button>
   )
 }
 
