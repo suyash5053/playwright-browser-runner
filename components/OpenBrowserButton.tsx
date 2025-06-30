@@ -32,8 +32,11 @@ const OpenBrowserButton = () => {
           return console.error(`docker might not running or ${data.error}`)
         }
         
-      } catch (error) {}
-      setIsLoading(false)
+      } catch (error) {
+        console.log (error)
+      } finally {
+        setIsLoading(false)
+      }
     }
     else {
       setIsLoading(true)

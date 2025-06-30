@@ -1,5 +1,5 @@
-import { execAsync } from "@/helpers"
-import { cdpEndpoint, cdpPort, dockerImage, vncPort } from "@/helpers/config"
+import { execAsync, getCdpEndpoint } from "@/helpers"
+import { dockerImage } from "@/helpers/config"
 
 let containerId: string | null = null
 
@@ -18,16 +18,16 @@ export const POST = async (req: Request) => {
             }
         }
 
-        const dockerCommand = `docker run -d -e PORT=${vncPort} -p ${vncPort}:${vncPort} -p ${cdpPort}:${cdpPort} -e START_URL=${url} ${dockerImage}`
+        const dockerCommand = `docker run -d --network app-network-global -e PORT=8080 -p 8080:8080 -p 9222:9222 -e START_URL=${url} ${dockerImage}`
         const { stdout } = await execAsync(dockerCommand)
         containerId = stdout.trim()
-        await new Promise((resolve) => setTimeout(resolve, 2500))
+        await new Promise((resolve) => setTimeout(resolve, 3000))
 
         return Response.json({
             success: true,
             containerId,
             url,
-            cdpEndpoint,
+            cdpEndpoint: await getCdpEndpoint(),
             status: "running"
         }, { status: 200 })
 
@@ -57,7 +57,7 @@ export const GET = async () => {
     return Response.json({
         status: isRunning ? "running" : "stopped",
         containerId: isRunning ? containerId : null,
-        cdpEndpoint: isRunning ? cdpEndpoint : null,
+        cdpEndpoint: isRunning ? await getCdpEndpoint() : null,
     }, { status: 200 })
 }
 

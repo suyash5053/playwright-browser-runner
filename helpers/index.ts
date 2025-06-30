@@ -3,6 +3,7 @@ import { ScreenshotResult } from "@/types";
 import { exec } from "child_process";
 import { Page } from "playwright";
 import { promisify } from "util";
+import dns from "dns/promises"
 
 export const execAsync = promisify(exec)
 
@@ -51,15 +52,20 @@ export const executePlaywrightCommand = async (page: Page, command: string): Pro
         }
 
         if (cleanCommand === 'page.screenshot()' || cleanCommand === 'await page.screenshot()') {
-            const screenshot = await page.screenshot();
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            return {
+            try {
+              const screenshot = await page.screenshot({ timeout: 10000 }); // Increase timeout
+              const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+              return {
                 action: 'download',
                 mimeType: 'image/png',
                 data: screenshot,
                 filename: `screenshot-${timestamp}.png`
-            };
-        }
+              };
+            } catch (err) {
+              console.error('Screenshot failed:', err);
+              throw new Error('Screenshot failed: ' + (err as Error).message);
+            }
+          }
 
         if (cleanCommand === "page.url()" || cleanCommand === "await page.url()") {
             const url: string = await page.url()
@@ -107,5 +113,11 @@ export const findContainersUsingPorts = async (ports: number[]) => {
     }
     return [...new Set(runningContainers)]
 }
+
+export const getCdpEndpoint = async (): Promise<string> => {
+    const { address } = await dns.lookup('host.docker.internal')
+    return `http://${address}:9222`
+}
+  
 
 
