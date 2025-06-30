@@ -1,6 +1,6 @@
 "use client"
 
-import { vncPort, password } from "@/helpers/config"
+import { password } from "@/helpers/config"
 import useStore from "@/store/useUiStore"
 
 const EmbeddedBrowser = () => {
