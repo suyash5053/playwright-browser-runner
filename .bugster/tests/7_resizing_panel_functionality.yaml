@@ -1,0 +1,10 @@
+name: Resizing panel functionality
+page: /
+page_path: app/page.tsx
+task: Test the ability to resize panels in the interface
+steps:
+- Navigate to the Playwright Runner homepage
+- Locate the resizable divider between left and right panels
+- Drag the divider to resize the panels
+- Verify that both panels resize accordingly
+expected_result: Panels should resize according to user drag actions

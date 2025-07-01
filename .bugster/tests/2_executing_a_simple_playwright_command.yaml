@@ -1,0 +1,12 @@
+name: Executing a simple Playwright command
+page: /
+page_path: app/page.tsx
+task: Test running a basic Playwright command in the runner
+steps:
+- Navigate to the Playwright Runner homepage
+- Open a browser if not already open
+- Enter 'await page.goto("https://example.com")' in the command input field
+- Submit the command
+- Verify that the embedded browser navigates to example.com
+expected_result: The command executes successfully and shows the result in the browser
+  window

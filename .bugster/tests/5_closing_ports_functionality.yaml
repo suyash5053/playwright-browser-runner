@@ -1,0 +1,10 @@
+name: Closing ports functionality
+page: /
+page_path: app/page.tsx
+task: Test the ability to close ports used by the browser
+steps:
+- Navigate to the Playwright Runner homepage
+- Open a browser instance
+- Click on the 'Close Ports' button
+- Verify that the browser instance is closed and ports are released
+expected_result: The ports should be closed and the browser instance terminated

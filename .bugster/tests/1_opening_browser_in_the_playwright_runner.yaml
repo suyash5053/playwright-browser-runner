@@ -1,0 +1,9 @@
+name: Opening browser in the Playwright Runner
+page: /
+page_path: app/page.tsx
+task: Test the functionality to open a browser instance
+steps:
+- Navigate to the Playwright Runner homepage
+- Click on the 'Open Browser' button
+- Verify that a browser window appears in the embedded display area
+expected_result: A browser window should be embedded in the application

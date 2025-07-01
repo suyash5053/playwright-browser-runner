@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Bugster
+.bugster/results/
+.bugster/screenshots/
+.bugster/videos/
+.bugster/logs/
+.bugster/reports/
+*.bugster.log

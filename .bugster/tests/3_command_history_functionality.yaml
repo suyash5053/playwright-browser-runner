@@ -1,0 +1,11 @@
+name: Command history functionality
+page: /
+page_path: app/page.tsx
+task: Test if executed commands are displayed in the command history
+steps:
+- Navigate to the Playwright Runner homepage
+- Open a browser if not already open
+- Execute multiple Playwright commands
+- Verify that all executed commands appear in the command history panel
+expected_result: Previously executed commands should appear in the command history
+  section

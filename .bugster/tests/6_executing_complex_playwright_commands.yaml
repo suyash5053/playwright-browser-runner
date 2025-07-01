@@ -1,0 +1,12 @@
+name: Executing complex Playwright commands
+page: /
+page_path: app/page.tsx
+task: Test running multi-line or complex Playwright commands
+steps:
+- Navigate to the Playwright Runner homepage
+- Open a browser if not already open
+- Enter a multi-line command like 'await page.goto("https://example.com"); await page.click("a");'
+- Submit the command
+- Verify that both commands execute in sequence in the embedded browser
+expected_result: Complex commands should execute correctly and produce the expected
+  results

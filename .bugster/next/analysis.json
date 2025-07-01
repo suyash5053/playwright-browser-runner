@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "timestamp": 1751364510.1641026,
+    "version": 2,
+    "git": {
+      "branch": "main",
+      "commit": "2ebfe92e31ba98b66839bf84a1f53c165169b904"
+    }
+  },
+  "data": {
+    "framework": {
+      "id": "next",
+      "name": "Next.js",
+      "dir_path": "/home/suyash/Stream/playwright-runner/"
+    },
+    "router_type": "app",
+    "stats": {
+      "fileCount": 26,
+      "routeCount": 1,
+      "apiRouteCount": 6,
+      "layoutCount": 1
+    },
+    "layouts": [
+      {
+        "name": "function",
+        "relative_file_path": "app/layout.tsx",
+        "relative_dir_path": "app",
+        "content": "import type { Metadata } from \"next\";\nimport { Inter } from \"next/font/google\";\nimport \"./globals.css\";\n\nconst inter = Inter({\n  subsets: [\"latin\"],\n});\n\n\nexport const metadata: Metadata = {\n  title: \"Playwright Runner\",\n  description: \"Run playwright commands on browser\",\n};\n\nexport default function RootLayout({\n  children,\n}: Readonly<{\n  children: React.ReactNode;\n}>) {\n  return (\n    <html lang=\"en\">\n      <body\n        className={`${inter.className} antialiased`}\n      >\n        {children}\n      </body>\n    </html>\n  );\n}\n",
+        "components": []
+      }
+    ],
+    "routes": [
+      {
+        "routePath": "/",
+        "relativeFilePath": "app/page.tsx",
+        "layoutChain": [
+          "function"
+        ],
+        "components": [
+          "PlaywrightRunner"
+        ],
+        "hasParams": false,
+        "hasForm": false,
+        "hooks": [],
+        "eventHandlers": [],
+        "featureFlags": []
+      }
+    ],
+    "api_routes": [
+      {
+        "routePath": "/api/browser",
+        "relativeFilePath": "app/api/browser/route.ts",
+        "methods": [],
+        "hasValidation": false,
+        "deps": [
+          "execAsync",
+          "getCdpEndpoint",
+          "dockerImage"
+        ]
+      },
+      {
+        "routePath": "/api/close-ports",
+        "relativeFilePath": "app/api/close-ports/route.ts",
+        "methods": [],
+        "hasValidation": false,
+        "deps": [
+          "findContainersUsingPorts",
+          "cdpPort",
+          "vncPort",
+          "execAsync"
+        ]
+      },
+      {
+        "routePath": "/api/playwright",
+        "relativeFilePath": "app/api/playwright/route.ts",
+        "methods": [
+          "POST"
+        ],
+        "hasValidation": false,
+        "deps": [
+          "Browser",
+          "chromium",
+          "Page",
+          "executePlaywrightCommand",
+          "getCdpEndpoint"
+        ]
+      },
+      {
+        "routePath": "/api/browser",
+        "relativeFilePath": "app/api/browser/route.ts",
+        "methods": [],
+        "hasValidation": false,
+        "deps": [
+          "execAsync",
+          "getCdpEndpoint",
+          "dockerImage"
+        ]
+      },
+      {
+        "routePath": "/api/close-ports",
+        "relativeFilePath": "app/api/close-ports/route.ts",
+        "methods": [],
+        "hasValidation": false,
+        "deps": [
+          "findContainersUsingPorts",
+          "cdpPort",
+          "vncPort",
+          "execAsync"
+        ]
+      },
+      {
+        "routePath": "/api/playwright",
+        "relativeFilePath": "app/api/playwright/route.ts",
+        "methods": [
+          "POST"
+        ],
+        "hasValidation": false,
+        "deps": [
+          "Browser",
+          "chromium",
+          "Page",
+          "executePlaywrightCommand",
+          "getCdpEndpoint"
+        ]
+      }
+    ],
+    "all_paths": [
+      "app/api/browser/route.ts",
+      "app/api/close-ports/route.ts",
+      "app/api/playwright/route.ts",
+      "app/layout.tsx",
+      "app/page.tsx",
+      "components/ClosePortsButton.tsx",
+      "components/CommandHistory.tsx",
+      "components/CommandInput.tsx",
+      "components/EmbeddedBrowser.tsx",
+      "components/ExpandScreenButton.tsx",
+      "components/LeftPanel.tsx",
+      "components/OpenBrowserButton.tsx",
+      "components/PlaywrightRunner.tsx",
+      "components/RightPanel.tsx",
+      "components/ui/button.tsx",
+      "components/ui/card.tsx",
+      "components/ui/input.tsx",
+      "components/ui/resizable.tsx",
+      "components/ui/textarea.tsx",
+      "helpers/config.ts",
+      "helpers/index.ts",
+      "lib/utils.ts",
+      "next.config.ts",
+      "store/useBrowserStore.ts",
+      "store/useUiStore.ts",
+      "types/index.ts"
+    ]
+  }
+}

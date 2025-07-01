@@ -1,0 +1,10 @@
+name: Expanding screen functionality
+page: /
+page_path: app/page.tsx
+task: Test the ability to expand the browser display
+steps:
+- Navigate to the Playwright Runner homepage
+- Open a browser if not already open
+- Click on the expand screen button
+- Verify that the browser display area increases in size
+expected_result: The browser display area should expand to a larger size

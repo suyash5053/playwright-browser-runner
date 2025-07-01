@@ -1,0 +1,7 @@
+base_url: http://localhost:3000
+credentials:
+- id: test-user
+  password: root@12345
+  username: suyashsrivastava5053@gmail.com
+project_id: g3nCBYiWgAspKL69TRim
+project_name: playwright-runner

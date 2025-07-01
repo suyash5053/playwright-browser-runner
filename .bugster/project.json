@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "timestamp": 1751364502659,
+    "version": 2,
+    "git": {
+      "branch": "main",
+      "commit": "2ebfe92e31ba98b66839bf84a1f53c165169b904"
+    }
+  },
+  "data": {
+    "frameworks": [
+      {
+        "id": "next",
+        "name": "Next.js",
+        "dir_path": "/home/suyash/Stream/playwright-runner/"
+      }
+    ]
+  }
+}
