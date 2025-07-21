@@ -87,6 +87,7 @@ docker network create app-network-global
 
 ## Future Improvements
 
+- Creating a production version of the app.
 - Adding better UI for the embedded browser.
 - Adding a way to show logs as well as errors in the UI.
 - Adding a click event to run the command from the history.
