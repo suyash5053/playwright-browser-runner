@@ -1,4 +1,10 @@
 services:
+  preloader:
+    image: docker:cli
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: ["sh", "-c", "docker pull suyash5053/chromium-vnc-cdp"]
+
   nextjs-app:
     build:
       context: .
@@ -7,8 +13,12 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - preloader
     networks:
       - app-network
 

@@ -1,108 +1,115 @@
-import { Browser, chromium, Page } from 'playwright'
-import { executePlaywrightCommand, getCdpEndpoint } from "@/helpers"
+import { executePlaywrightCommand, getCdpEndpoint } from "@/helpers";
+import { Browser, chromium, Page } from "playwright";
 
-let browser: Browser | null = null
-let page: Page | null = null
-
+let browser: Browser | null = null;
+let page: Page | null = null;
 
 const ensureConnection = async () => {
   if (!browser || !page) {
     try {
-      const cdpEndpoint = await getCdpEndpoint()
-      browser = await chromium.connectOverCDP(cdpEndpoint)
+      const cdpEndpoint = await getCdpEndpoint();
+      browser = await chromium.connectOverCDP(cdpEndpoint);
 
-      const contexts = browser.contexts()
-      let foundPage = null
+      const contexts = browser.contexts();
+      let foundPage = null;
 
       for (const context of contexts) {
-        const pages = context.pages()
+        const pages = context.pages();
         if (pages.length > 0) {
-          foundPage = pages[0]
-          break
+          foundPage = pages[0];
+          break;
         }
       }
 
       if (foundPage) {
-        page = foundPage
+        page = foundPage;
       } else {
-        const context = contexts[0] || await browser.newContext()
-        page = await context.newPage()
+        const context = contexts[0] || (await browser.newContext());
+        page = await context.newPage();
       }
 
-      console.log('Connected to existing browser instance')
+      console.log("Connected to existing browser instance");
     } catch (error) {
-      console.error('Failed to connect to browser:', error)
-      throw error
+      console.error("Failed to connect to browser:", error);
+      throw error;
     }
   }
-}
+};
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json()
-    const command = body.command
+    const body = await req.json();
+    const command = body.command;
 
-    if (!command || typeof command !== 'string') {
-      return Response.json({
-        success: false,
-        error: "Command is required and must be a string"
-      }, { status: 400 })
+    if (!command || typeof command !== "string") {
+      return Response.json(
+        {
+          success: false,
+          error: "Command is required and must be a string",
+        },
+        { status: 400 },
+      );
     }
-    await ensureConnection()
+    await ensureConnection();
 
     if (!page) {
-      return Response.json({
-        success: false,
-        error: "Page not initialized"
-      }, { status: 500 })
+      return Response.json(
+        {
+          success: false,
+          error: "Page not initialized",
+        },
+        { status: 500 },
+      );
     }
 
-    const result = await executePlaywrightCommand(page, command)
-    if (typeof result !== 'string' && result.action === 'download') {
-      return new Response(result.data, {
+    const result = await executePlaywrightCommand(page, command);
+    if (typeof result !== "string" && result.action === "download") {
+      return new Response(result.data as unknown as BodyInit, {
         headers: {
-          'Content-Type': result.mimeType,
-          'Content-Disposition': `attachment; filename="${result.filename}"`,
-          'Access-Control-Expose-Headers': 'Content-Disposition'
-        }
+          "Content-Type": result.mimeType,
+          "Content-Disposition": `attachment; filename="${result.filename}"`,
+          "Access-Control-Expose-Headers": "Content-Disposition",
+        },
       });
     }
     return Response.json({
       success: true,
       result: result,
-      command: command
+      command: command,
     });
-
   } catch (error) {
-    console.error("Error:", error)
+    console.error("Error:", error);
 
+    browser = null;
+    page = null;
 
-    browser = null
-    page = null
-
-    return Response.json({
-      success: false,
-      error: error instanceof Error ? error.message : "Command execution failed",
-    }, { status: 500 })
+    return Response.json(
+      {
+        success: false,
+        error:
+          error instanceof Error ? error.message : "Command execution failed",
+      },
+      { status: 500 },
+    );
   }
 }
 
-process.on('SIGTERM', async () => {
+process.on("SIGTERM", async () => {
   if (browser) {
     try {
-      await browser.close()
+      await browser.close();
     } catch (e) {
-      console.error('Error closing browser:', e)
+      console.error("Error closing browser:", e);
     }
   }
-})
+});
 
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
   if (browser) {
     try {
-      await browser.close()
+      await browser.close();
     } catch (e) {
-      console.error('Error closing browser:', e)
+      console.error("Error closing browser:", e);
     }
   }
-})
+});
